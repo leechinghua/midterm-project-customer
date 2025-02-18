@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>dashboard</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --aside-width: 240px;
+        --page-top: 56px;
+      }
+      .brand {
+        width: var(--aside-width);
+      }
+      .aside-content {
+        /* top : 0 可以讓aside位置回到最頂部 */
+        top: 0;
+        width: var(--aside-width);
+        height: 100%;
+        margin-top: var(--page-top);
+        /* 也可設定padding-top */
+      }
+      .main-content {
+        /* 讓main不會被遮住 */
+        margin: var(--page-top) 0 0 var(--aside-width);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- d-flex 設定在容器上較好 -->
+    <header class="bg-dark fixed-top d-flex">
+      <a class="brand text-decoration-none text-white bg-black p-3" href=""
+        >Company Name</a
+      >
+    </header>
+
+    <aside class="aside-content bg-light border-end position-fixed">
+      <!-- 清單列表 -->
+      <ul class="list-unstyled">
+        <li>
+          <!-- a : d-block 讓超連結變為block元素，感應範圍變大，且可設定padding -->
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-house-fill me-2"></i>Dashboard</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-file-earmark me-2"></i>Orders</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-cart3 me-2"></i>Products</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-people me-2"></i>Customers</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-graph-up me-2"></i>Reports</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-puzzle me-2"></i>Integrations</a
+          >
+        </li>
+      </ul>
+      <!-- 中間文字 -->
+      <div class="d-flex justify-content-between px-3 text-secondary">
+        <span>SAVED REPORTS</span>
+        <a><i class="bi bi-plus-circle"></i></a>
+      </div>
+      <!-- 清單列表 -->
+      <ul class="list-unstyled">
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-file-earmark-text me-2"></i>Current month</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-file-earmark-text me-2"></i>Last quarter</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-file-earmark-text me-2"></i>Social engagement</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-file-earmark-text me-2"></i>Year-end sale</a
+          >
+        </li>
+      </ul>
+      <hr />
+      <ul class="list-unstyled">
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-gear-wide-connected me-2"></i>Settings</a
+          >
+        </li>
+        <li>
+          <a class="text-decoration-none d-block px-3 py-2" href=""
+            ><i class="bi bi-door-closed me-2"></i>Sign out</a
+          >
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- 將h1自帶的margin消除 -->
+        <h1 class="m-0">Dashboard</h1>
+        <!-- button用div包起來 -->
+        <div>
+          <div
+            class="btn-group btn-group-sm"
+            role="group"
+            aria-label="Small button group"
+          >
+            <button type="button" class="btn btn-outline-secondary">
+              Share
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              Export
+            </button>
+          </div>
+          <div class="btn-group">
+            <button
+              class="btn btn-outline-secondary btn-sm dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-calendar3 me-1"></i>This week
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <h2>Section title</h2>
+      <!-- 表單 -->
+      <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+              <th scope="col">Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>data</td>
+              <td>rich</td>
+              <td>dashboard</td>
+              <td>tabular</td>
+            </tr>
+            <tr>
+              <td>1,003</td>
+              <td>information</td>
+              <td>placeholder</td>
+              <td>illustrative</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>1,004</td>
+              <td>text</td>
+              <td>random</td>
+              <td>layout</td>
+              <td>dashboard</td>
+            </tr>
+            <tr>
+              <td>1,005</td>
+              <td>dashboard</td>
+              <td>irrelevant</td>
+              <td>text</td>
+              <td>placeholder</td>
+            </tr>
+            <tr>
+              <td>1,006</td>
+              <td>dashboard</td>
+              <td>illustrative</td>
+              <td>rich</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>1,007</td>
+              <td>placeholder</td>
+              <td>tabular</td>
+              <td>information</td>
+              <td>irrelevant</td>
+            </tr>
+            <tr>
+              <td>1,008</td>
+              <td>random</td>
+              <td>data</td>
+              <td>placeholder</td>
+              <td>text</td>
+            </tr>
+            <tr>
+              <td>1,009</td>
+              <td>placeholder</td>
+              <td>irrelevant</td>
+              <td>visual</td>
+              <td>layout</td>
+            </tr>
+            <tr>
+              <td>1,010</td>
+              <td>data</td>
+              <td>rich</td>
+              <td>dashboard</td>
+              <td>tabular</td>
+            </tr>
+            <tr>
+              <td>1,011</td>
+              <td>information</td>
+              <td>placeholder</td>
+              <td>illustrative</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>1,012</td>
+              <td>text</td>
+              <td>placeholder</td>
+              <td>layout</td>
+              <td>dashboard</td>
+            </tr>
+            <tr>
+              <td>1,013</td>
+              <td>dashboard</td>
+              <td>irrelevant</td>
+              <td>text</td>
+              <td>visual</td>
+            </tr>
+            <tr>
+              <td>1,014</td>
+              <td>dashboard</td>
+              <td>illustrative</td>
+              <td>rich</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>1,015</td>
+              <td>random</td>
+              <td>tabular</td>
+              <td>information</td>
+              <td>text</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+  </body>
+</html>
