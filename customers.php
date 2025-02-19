@@ -39,6 +39,15 @@ if ($totalRows > 0) {
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<style>
+  .password-column {
+    max-width: 100px;
+    /* 設定固定寬度 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
 <?php include __DIR__ . '/parts/navbar.php' ?>
 <main class="main-content p-3">
   <!-- 大標 -->
@@ -53,54 +62,56 @@ if ($totalRows > 0) {
       <a href="customers-add.php"><button type="button" class="btn btn-primary">新增會員</button></a>
     </div>
   </div>
-
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>會員編號</th>
-        <th>電子郵件（帳號）</th>
-        <th>密碼</th>
-        <th>姓名</th>
-        <th>電話</th>
-        <th>性別</th>
-        <th>生日</th>
-        <th>地址</th>
-        <th>自我介紹</th>
-        <th>身分證字號</th>
-        <th>註冊時間</th>
-        <th>刪除</th>
-        <th>編輯</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      foreach ($rows as $r) :
-      ?>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
         <tr>
-          <td><?= $r['id'] ?></td>
-          <td><?= $r['email'] ?></td>
-          <td><?= $r['password'] ?></td>
-          <td><?= $r['name'] ?></td>
-          <td><?= $r['phone'] ?></td>
-          <td><?= $r['gender'] ?></td>
-          <td><?= $r['birthday'] ?></td>
-          <td><?= $r['address'] ?></td>
-          <td><?= $r['introduction'] ?></td>
-          <td><?= $r['id_card'] ?></td>
-          <td><?= $r['created_at'] ?></td>
-          <td>
-            <a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash-can"></i>
-            </a>
-          </td>
-          <td>
-            <a href="customers-edit.php?id=<?= $r['id'] ?>">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </a>
-          </td>
+          <th>會員編號</th>
+          <th>電子郵件（帳號）</th>
+          <th class="password-column">密碼</th>
+          <th>姓名</th>
+          <th>電話</th>
+          <th>性別</th>
+          <th>生日</th>
+          <th>地址</th>
+          <th>自我介紹</th>
+          <th>身分證字號</th>
+          <th>註冊時間</th>
+          <th>刪除</th>
+          <th>編輯</th>
         </tr>
-      <?php endforeach ?>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($rows as $r) :
+        ?>
+          <tr>
+            <td><?= $r['id'] ?></td>
+            <td><?= $r['email'] ?></td>
+            <td class="password-column"><?= $r['password'] ?></td>
+            <td><?= $r['name'] ?></td>
+            <td><?= $r['phone'] ?></td>
+            <td><?= $r['gender'] ?></td>
+            <td><?= $r['birthday'] ?></td>
+            <td><?= $r['address'] ?></td>
+            <td><?= $r['introduction'] ?></td>
+            <td><?= $r['id_card'] ?></td>
+            <td><?= $r['created_at'] ?></td>
+            <td>
+              <a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash-can"></i>
+              </a>
+            </td>
+            <td>
+              <a href="customers-edit.php?id=<?= $r['id'] ?>">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </td>
+          </tr>
+        <?php endforeach ?>
+      </tbody>
+    </table>
+  </div>
+
   <!-- 分頁按鈕 -->
   <div>
     <nav aria-label="Page navigation example">
