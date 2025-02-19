@@ -42,13 +42,18 @@ if ($totalRows > 0) {
 <?php include __DIR__ . '/parts/navbar.php' ?>
 <main class="main-content p-3">
   <!-- 大標 -->
-  
+
   <div class="d-flex justify-content-between align-items-center">
     <h2>會員帳號</h2>
-    <a href="customers-add.php"><button type="button" class="btn btn-primary">新增會員</button></a>
-    
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <form class="d-flex" role="search" method="get">
+        <input class="form-control me-2" type="search" placeholder="搜尋會員姓名" aria-label="Search" name="search" value="<?= htmlentities($_GET['search'] ?? '') ?>" aria-label="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+      <a href="customers-add.php"><button type="button" class="btn btn-primary">新增會員</button></a>
+    </div>
   </div>
-  
+
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
@@ -79,7 +84,7 @@ if ($totalRows > 0) {
           <td><?= $r['phone'] ?></td>
           <td><?= $r['gender'] ?></td>
           <td><?= $r['birthday'] ?></td>
-          <td><?= $r['address']?></td>
+          <td><?= $r['address'] ?></td>
           <td><?= $r['introduction'] ?></td>
           <td><?= $r['id_card'] ?></td>
           <td><?= $r['created_at'] ?></td>
@@ -130,12 +135,10 @@ if ($totalRows > 0) {
 
 <?php include __DIR__ . '/parts/scripts.php' ?>
 <script>
-  const deleteOne = id =>{
-    if(confirm(`是否要刪除編號為${id}的會員?`)){
-      location.href =`customers-delete.php?id=${id}`
+  const deleteOne = id => {
+    if (confirm(`是否要刪除編號為${id}的會員?`)) {
+      location.href = `customers-delete.php?id=${id}`
     }
   }
-
-  
 </script>
 <?php include __DIR__ . '/parts/html-foot.php' ?>
