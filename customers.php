@@ -2,23 +2,34 @@
 require __DIR__ . '/config/pdo-connect.php';
 $title = '會員帳號';
 
-$t_sql = "SELECT COUNT(*) FROM customers";
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+if (!empty($search)) {
+  $t_sql = "SELECT COUNT(*) FROM `customers` WHERE `name` LIKE :search";
+  $stmt = $pdo->prepare($t_sql);
+  $stmt->execute([':search' => "%{$search}%"]);
+} else {
+  $t_sql = "SELECT COUNT(*) FROM customers";
+  $stmt = $pdo->query($t_sql);
+}
+
 
 $perPage = 10;
 
 $page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
 if ($page < 1) {
-  header('Location: ?page=1');
+  header('Location: ?page=1' . ($search ? "&search=$search" : ''));
   exit;
+  // header('Location: ?page=1');
+  // exit;
 }
 
 # 取得資料總筆數
-$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+$totalRows = $stmt->fetch(PDO::FETCH_NUM)[0];
+// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 
 if ($totalRows > 0) {
   # 如果有資料才去取得分頁資料
-
   # 總頁數
   # 無條件進位
   $totalPages = ceil($totalRows / $perPage);
@@ -28,13 +39,33 @@ if ($totalRows > 0) {
   }
 
   # 拿到第n頁的資料
-  $sql = sprintf("SELECT*
+  if (!empty($search)) {
+    $sql = sprintf(
+      "SELECT*
   FROM
-  customers
+  `customers`
+  WHERE `name`LIKE :search
   ORDER BY id 
-  LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
-
-  $rows = $pdo->query($sql)->fetchAll();
+  LIMIT %s, %s",
+      ($page - 1) * $perPage,
+      $perPage
+    );
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':search' => "%{$search}%"]);
+    $rows = $stmt->fetchAll();
+  } else {
+    $sql = sprintf(
+      "SELECT * FROM customers ORDER BY id LIMIT %s, %s",
+      ($page - 1) * $perPage,
+      $perPage
+    );
+    $rows = $pdo->query($sql)->fetchAll();
+  }
+}
+function getPageLink($page)
+{
+  global $search;
+  return "?page=" . $page . ($search ? "&search=" . urlencode($search) : '');
 }
 
 ?>
@@ -56,7 +87,8 @@ if ($totalRows > 0) {
     <h2>會員帳號</h2>
     <div class="d-flex justify-content-center align-items-center gap-3">
       <form class="d-flex" role="search" method="get">
-        <input class="form-control me-2" type="search" placeholder="搜尋會員姓名" aria-label="Search" name="search" value="<?= htmlentities($_GET['search'] ?? '') ?>" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="搜尋會員姓名" aria-label="Search" name="search" value="<?= htmlentities($_GET['search'] ?? '')
+                                                                                                                      ?>" aria-label="Search">
         <button class="btn btn-primary" type="submit">Search</button>
       </form>
       <a href="customers-add.php"><button type="button" class="btn btn-primary">新增會員</button></a>
@@ -117,27 +149,27 @@ if ($totalRows > 0) {
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+          <a class="page-link" href="<?= getPageLink(1) ?>"><i class="fa-solid fa-angles-left"></i></a>
         </li>
         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=<?= $page - 1 ?>"><i class="fa-solid fa-chevron-left"></i></a>
+          <a class="page-link" href="<?= getPageLink($page - 1) ?>"><i class="fa-solid fa-chevron-left"></i></a>
         </li>
 
         <?php for ($i = $page - 2; $i <= $page + 2; $i++) :
           if ($i >= 1 and $i <= $totalPages) :
         ?>
             <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-              <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+              <a class="page-link" href="<?= getPageLink($i) ?>"><?= $i ?></a>
             </li>
         <?php endif;
         endfor; ?>
 
         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=<?= $page + 1 ?>"><i class="fa-solid fa-chevron-right"></i></a>
+          <a class="page-link" href="<?= getPageLink($page + 1) ?>"><i class="fa-solid fa-chevron-right"></i></a>
         </li>
 
         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-          <a class="page-link" href="?page=<?= $totalPages ?>"><i class="fa-solid fa-angles-right"></i></a>
+          <a class="page-link" href="<?= getPageLink($totalPages) ?>"><i class="fa-solid fa-angles-right"></i></a>
         </li>
       </ul>
     </nav>
